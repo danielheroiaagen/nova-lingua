@@ -2,95 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* LinguistX - Futuristic Language Learning Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Deep Space Background */
+    --background: 240 67% 3%;
+    --foreground: 180 100% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Cards with glassmorphism */
+    --card: 240 50% 8%;
+    --card-foreground: 180 100% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 50% 6%;
+    --popover-foreground: 180 100% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Cyber Cyan - Primary */
+    --primary: 186 100% 50%;
+    --primary-foreground: 240 67% 3%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Plasma Pink - Secondary */
+    --secondary: 324 100% 50%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted */
+    --muted: 240 30% 15%;
+    --muted-foreground: 220 15% 60%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Electric Purple - Accent */
+    --accent: 270 100% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* XP Gold */
+    --xp: 45 100% 50%;
+    --xp-foreground: 240 67% 3%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Success Green */
+    --success: 145 80% 45%;
+    --success-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
 
-    --sidebar-background: 0 0% 98%;
+    --border: 240 30% 20%;
+    --input: 240 30% 15%;
+    --ring: 186 100% 50%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --radius: 1rem;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Gradients */
+    --gradient-cyber: linear-gradient(135deg, hsl(186 100% 50%) 0%, hsl(270 100% 60%) 100%);
+    --gradient-plasma: linear-gradient(135deg, hsl(324 100% 50%) 0%, hsl(270 100% 60%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%) 0%, hsl(30 100% 50%) 100%);
+    --gradient-deep: linear-gradient(180deg, hsl(240 67% 5%) 0%, hsl(240 67% 2%) 100%);
+    --gradient-glass: linear-gradient(135deg, hsla(240 50% 20% / 0.3) 0%, hsla(240 50% 10% / 0.2) 100%);
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Glassmorphism */
+    --glass-bg: hsla(240 50% 15% / 0.4);
+    --glass-border: hsla(186 100% 50% / 0.2);
+    --glass-shadow: 0 8px 32px hsla(240 67% 3% / 0.6);
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    /* Glow effects */
+    --glow-cyan: 0 0 20px hsla(186 100% 50% / 0.5), 0 0 40px hsla(186 100% 50% / 0.3);
+    --glow-pink: 0 0 20px hsla(324 100% 50% / 0.5), 0 0 40px hsla(324 100% 50% / 0.3);
+    --glow-gold: 0 0 20px hsla(45 100% 50% / 0.5), 0 0 40px hsla(45 100% 50% / 0.3);
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 240 50% 6%;
+    --sidebar-foreground: 180 100% 95%;
+    --sidebar-primary: 186 100% 50%;
+    --sidebar-primary-foreground: 240 67% 3%;
+    --sidebar-accent: 240 30% 15%;
+    --sidebar-accent-foreground: 180 100% 95%;
+    --sidebar-border: 240 30% 20%;
+    --sidebar-ring: 186 100% 50%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Same as root - this is a dark-first design */
+    --background: 240 67% 3%;
+    --foreground: 180 100% 95%;
+    --card: 240 50% 8%;
+    --card-foreground: 180 100% 95%;
+    --popover: 240 50% 6%;
+    --popover-foreground: 180 100% 95%;
+    --primary: 186 100% 50%;
+    --primary-foreground: 240 67% 3%;
+    --secondary: 324 100% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 30% 15%;
+    --muted-foreground: 220 15% 60%;
+    --accent: 270 100% 60%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 30% 20%;
+    --input: 240 30% 15%;
+    --ring: 186 100% 50%;
   }
 }
 
@@ -100,6 +109,92 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, hsl(240 67% 5%) 0%, hsl(240 67% 2%) 100%);
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Orbitron', sans-serif;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--glow-cyan);
+  }
+
+  .glow-pink {
+    box-shadow: var(--glow-pink);
+  }
+
+  .glow-gold {
+    box-shadow: var(--glow-gold);
+  }
+
+  .text-gradient-cyber {
+    background: var(--gradient-cyber);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-plasma {
+    background: var(--gradient-plasma);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: var(--gradient-gold);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .holographic {
+    background: linear-gradient(
+      135deg,
+      hsla(186 100% 50% / 0.1) 0%,
+      hsla(270 100% 60% / 0.1) 25%,
+      hsla(324 100% 50% / 0.1) 50%,
+      hsla(186 100% 50% / 0.1) 75%,
+      hsla(270 100% 60% / 0.1) 100%
+    );
+    background-size: 200% 200%;
+    animation: holographic-shift 8s ease infinite;
+  }
+
+  @keyframes holographic-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 1; filter: brightness(1); }
+    50% { opacity: 0.8; filter: brightness(1.2); }
+  }
+
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
   }
 }
