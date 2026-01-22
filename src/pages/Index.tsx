@@ -3,7 +3,7 @@ import { Header, Language, languages } from "@/components/layout/Header";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { HomeScreen } from "@/components/screens/HomeScreen";
 import { LessonScreen } from "@/components/screens/LessonScreen";
-import { ChatScreen } from "@/components/screens/ChatScreen";
+import { ChatScreen, FloatingChatButton } from "@/components/screens/ChatScreen";
 import { LeaderboardScreen } from "@/components/screens/LeaderboardScreen";
 import { ProfileScreen } from "@/components/screens/ProfileScreen";
 import { AnimatePresence, motion } from "framer-motion";
@@ -12,6 +12,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(languages[0]);
   const [showLesson, setShowLesson] = useState(false);
+  const [showFloatingChat, setShowFloatingChat] = useState(false);
   const [userStats, setUserStats] = useState({
     xp: 12580,
     streak: 15,
@@ -79,6 +80,18 @@ const Index = () => {
 
         <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
+
+      {/* Floating Chat Button - shows on all tabs except chat */}
+      {activeTab !== "chat" && !showLesson && !showFloatingChat && (
+        <FloatingChatButton onClick={() => setShowFloatingChat(true)} />
+      )}
+
+      {/* Floating Chat Window */}
+      <AnimatePresence>
+        {showFloatingChat && (
+          <ChatScreen isFloating onClose={() => setShowFloatingChat(false)} />
+        )}
+      </AnimatePresence>
 
       {/* Lesson Overlay */}
       <AnimatePresence>
