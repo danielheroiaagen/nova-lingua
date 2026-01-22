@@ -19,7 +19,10 @@ const Index = () => {
     lives: 5,
   });
 
+  const [currentLessonId, setCurrentLessonId] = useState<string>("1");
+
   const handleStartLesson = (lessonId: string) => {
+    setCurrentLessonId(lessonId);
     setShowLesson(true);
   };
 
@@ -97,6 +100,7 @@ const Index = () => {
       <AnimatePresence>
         {showLesson && (
           <LessonScreen
+            lessonId={currentLessonId}
             onClose={() => setShowLesson(false)}
             onComplete={handleLessonComplete}
           />
