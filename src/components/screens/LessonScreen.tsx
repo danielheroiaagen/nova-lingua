@@ -1,11 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GlassCard } from "../ui/GlassCard";
 import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
 import { XPBadge } from "../ui/XPBadge";
-import { X, Volume2, Check, X as Wrong, Sparkles } from "lucide-react";
+import { X, Volume2, Check, X as Wrong, Sparkles, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useGameSounds } from "@/lib/sounds";
 
 interface Question {
   id: string;
@@ -52,9 +53,26 @@ export const LessonScreen = ({ onClose, onComplete }: LessonScreenProps) => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [xpEarned, setXpEarned] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const { playSound, preloadSounds } = useGameSounds();
 
   const currentQuestion = sampleQuestions[currentIndex];
   const progress = ((currentIndex + 1) / sampleQuestions.length) * 100;
+
+  useEffect(() => {
+    preloadSounds();
+  }, []);
+
+  const speakText = (text: string) => {
+    if (isMuted) return;
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = text.match(/[áéíóúñ¿¡]/) ? 'es-ES' : 'en-US';
+      utterance.rate = 0.85;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
 
   const handleAnswer = (answer: string) => {
     if (selectedAnswer) return;
@@ -65,6 +83,9 @@ export const LessonScreen = ({ onClose, onComplete }: LessonScreenProps) => {
 
     if (correct) {
       setXpEarned((prev) => prev + 10);
+      if (!isMuted) playSound("correct");
+    } else {
+      if (!isMuted) playSound("wrong");
     }
 
     // Auto advance after delay
@@ -74,6 +95,7 @@ export const LessonScreen = ({ onClose, onComplete }: LessonScreenProps) => {
         setSelectedAnswer(null);
         setIsCorrect(null);
       } else {
+        if (!isMuted) playSound("complete");
         setShowResult(true);
       }
     }, 1500);
@@ -145,6 +167,17 @@ export const LessonScreen = ({ onClose, onComplete }: LessonScreenProps) => {
         <div className="flex-1">
           <Progress value={progress} className="h-3" />
         </div>
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setIsMuted(!isMuted)}
+          className={cn(
+            "p-2 rounded-full transition-colors",
+            isMuted ? "bg-destructive/20 text-destructive" : "bg-primary/20 text-primary"
+          )}
+        >
+          {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+        </motion.button>
         <XPBadge xp={xpEarned} size="sm" />
       </div>
 
@@ -172,6 +205,7 @@ export const LessonScreen = ({ onClose, onComplete }: LessonScreenProps) => {
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
+                    onClick={() => speakText(currentQuestion.prompt)}
                     className="p-2 rounded-full bg-primary/20 text-primary"
                   >
                     <Volume2 size={20} />
@@ -210,26 +244,24 @@ export const LessonScreen = ({ onClose, onComplete }: LessonScreenProps) => {
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-foreground">{option}</span>
-                      <AnimatePresence>
-                        {showCorrect && (
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="text-success"
-                          >
-                            <Check size={24} />
-                          </motion.div>
-                        )}
-                        {showWrong && (
-                          <motion.div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="text-destructive"
-                          >
-                            <Wrong size={24} />
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {showCorrect && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="text-success"
+                        >
+                          <Check size={24} />
+                        </motion.div>
+                      )}
+                      {showWrong && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="text-destructive"
+                        >
+                          <Wrong size={24} />
+                        </motion.div>
+                      )}
                     </div>
                   </motion.button>
                 );
